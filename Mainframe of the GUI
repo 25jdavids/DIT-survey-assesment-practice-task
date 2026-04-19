@@ -1,0 +1,15 @@
+#Mainframe of the GUI application
+root = tk.Tk()
+root.title("Survey App")
+
+people = []        #List to store all person objects
+current = 0        #Keeps track of which person is being displayed
+
+#Framework
+entry_frame = tk.Frame(root)     #Frame for entering data
+display_frame = tk.Frame(root)   #Frame for displaying data
+
+entry_frame.grid(row=0, column=0)
+
+#Entry Widgets (User Input Section)
+#The widgets that are being added to the framework to show what information needs to be entered
