@@ -1,0 +1,124 @@
+import tkinter as tk
+
+#The first person class
+class Person:
+    def __init__(self, name, age, phone):
+        self.name = name
+        self.age = age                   
+        self.phone = phone
+
+#Mainframe of the GUI application
+root = tk.Tk()
+root.title("Survey App")
+
+people = []        #List to store all person objects
+current = 0        #Keeps track of which person is being displayed
+
+#Framework
+entry_frame = tk.Frame(root)     #Frame for entering data
+display_frame = tk.Frame(root)   #Frame for displaying data
+
+entry_frame.grid(row=0, column=0)
+
+#Entry Widgets (User Input Section)
+#The widgets that are being added to the framework to show what information needs to be entered
+
+tk.Label(entry_frame, text="Name").grid(row=0, column=0)
+name_entry = tk.Entry(entry_frame)
+name_entry.grid(row=0, column=1)
+
+tk.Label(entry_frame, text="Age").grid(row=1, column=0)
+age_entry = tk.Entry(entry_frame)
+age_entry.grid(row=1, column=1)
+
+phone_var = tk.StringVar(value="No")   #Stores Yes/No value
+
+tk.Label(entry_frame, text="Phone?").grid(row=2, column=0, columnspan=2)
+
+#Radiobuttons to make selecting yes and no easier instead of using labels and if statements
+tk.Radiobutton(entry_frame, text="Yes", variable=phone_var, value="Yes").grid(row=3, column=0)
+tk.Radiobutton(entry_frame, text="No", variable=phone_var, value="No").grid(row=3, column=1)
+
+#Functions
+#The functions needed for validation and displaying outputs
+
+def enter_data():
+    name = name_entry.get()
+    age = age_entry.get()
+    phone = phone_var.get()
+    #Making sure all fields are filled
+    if name == "" or age == "":
+        print("Fill all fields")
+        return
+    #Input validation for age
+    if not age.isdigit():
+        print("Age must be a number")
+        return
+    #Creating a person object and storing it
+    person = Person(name, int(age), phone)
+    people.append(person)
+    print("Added:", name)
+    #Clearing input boxes after entry
+    name_entry.delete(0, tk.END)
+    age_entry.delete(0, tk.END)
+
+def show_display():
+    global current
+    #Check if there is any data
+    if len(people) == 0:
+        print("No data yet")
+        return
+    #Switch from entry frame to display frame
+    entry_frame.grid_forget()
+    display_frame.grid(row=0, column=0)
+
+    current = 0
+    update_display()
+
+def update_display():
+    #Display current person's data
+    p = people[current]
+
+    name_label.config(text="Name: " + p.name)
+    age_label.config(text="Age: " + str(p.age))
+    phone_label.config(text="Phone: " + p.phone)
+
+def next_person():
+    global current
+    #Move forward through the list
+    if current < len(people) - 1:
+        current += 1
+        update_display()
+
+def prev_person():
+    global current
+    #Move backwards through the list
+    if current > 0:
+        current -= 1
+        update_display()
+
+def back_to_entry():
+    # Return to the input screen
+    display_frame.grid_forget()
+    entry_frame.grid(row=0, column=0)
+
+#Buttons for Entry Section of the code
+tk.Button(entry_frame, text="Enter Data", command=enter_data).grid(row=4, column=0)
+tk.Button(entry_frame, text="Show All", command=show_display).grid(row=4, column=1)
+
+#Widgets that display the information being required
+name_label = tk.Label(display_frame, text="")
+name_label.pack()
+
+age_label = tk.Label(display_frame, text="")
+age_label.pack()
+
+phone_label = tk.Label(display_frame, text="")
+phone_label.pack()
+
+# Navigation Buttons to go forward and back
+tk.Button(display_frame, text="Previous", command=prev_person).pack()
+tk.Button(display_frame, text="Next", command=next_person).pack()
+tk.Button(display_frame, text="Add New Person", command=back_to_entry).pack()
+
+root.mainloop()
