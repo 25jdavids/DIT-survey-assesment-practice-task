@@ -1,0 +1,59 @@
+def enter_data():
+    name = name_entry.get()
+    age = age_entry.get()
+    phone = phone_var.get()
+    #Making sure all fields are filled
+    if name == "" or age == "":
+        print("Fill all fields")
+        return
+    #Input validation for age
+    if not age.isdigit():
+        print("Age must be a number")
+        return
+    #Creating a person object and storing it
+    person = Person(name, int(age), phone)
+    people.append(person)
+    print("Added:", name)
+    #Clearing input boxes after entry
+    name_entry.delete(0, tk.END)
+    age_entry.delete(0, tk.END)
+
+def show_display():
+    global current
+    #Check if there is any data
+    if len(people) == 0:
+        print("No data yet")
+        return
+    #Switch from entry frame to display frame
+    entry_frame.grid_forget()
+    display_frame.grid(row=0, column=0)
+
+    current = 0
+    update_display()
+
+def update_display():
+    #Display current person's data
+    p = people[current]
+
+    name_label.config(text="Name: " + p.name)
+    age_label.config(text="Age: " + str(p.age))
+    phone_label.config(text="Phone: " + p.phone)
+
+def next_person():
+    global current
+    #Move forward through the list
+    if current < len(people) - 1:
+        current += 1
+        update_display()
+
+def prev_person():
+    global current
+    #Move backwards through the list
+    if current > 0:
+        current -= 1
+        update_display()
+
+def back_to_entry():
+    # Return to the input screen
+    display_frame.grid_forget()
+    entry_frame.grid(row=0, column=0)
