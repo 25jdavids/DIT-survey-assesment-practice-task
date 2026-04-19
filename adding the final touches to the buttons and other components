@@ -1,0 +1,20 @@
+#Buttons for Entry Section of the code
+tk.Button(entry_frame, text="Enter Data", command=enter_data).grid(row=4, column=0)
+tk.Button(entry_frame, text="Show All", command=show_display).grid(row=4, column=1)
+
+#Widgets that display the information being required
+name_label = tk.Label(display_frame, text="")
+name_label.pack()
+
+age_label = tk.Label(display_frame, text="")
+age_label.pack()
+
+phone_label = tk.Label(display_frame, text="")
+phone_label.pack()
+
+# Navigation Buttons to go forward and back
+tk.Button(display_frame, text="Previous", command=prev_person).pack()
+tk.Button(display_frame, text="Next", command=next_person).pack()
+tk.Button(display_frame, text="Add New Person", command=back_to_entry).pack()
+
+root.mainloop()
