@@ -1,0 +1,18 @@
+tk.Label(entry_frame, text="Name").grid(row=0, column=0)
+name_entry = tk.Entry(entry_frame)
+name_entry.grid(row=0, column=1)
+
+tk.Label(entry_frame, text="Age").grid(row=1, column=0)
+age_entry = tk.Entry(entry_frame)
+age_entry.grid(row=1, column=1)
+
+phone_var = tk.StringVar(value="No")   #Stores Yes/No value
+
+tk.Label(entry_frame, text="Phone?").grid(row=2, column=0, columnspan=2)
+
+#Radiobuttons to make selecting yes and no easier instead of using labels and if statements
+tk.Radiobutton(entry_frame, text="Yes", variable=phone_var, value="Yes").grid(row=3, column=0)
+tk.Radiobutton(entry_frame, text="No", variable=phone_var, value="No").grid(row=3, column=1)
+
+#Functions
+#The functions needed for validation and displaying outputs
